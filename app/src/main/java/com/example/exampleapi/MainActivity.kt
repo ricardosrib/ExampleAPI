@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
 
 
-        // GET
+        // GET (hardcoded path)
 
 //        viewModel.getPosts()
 //
@@ -52,17 +52,75 @@ class MainActivity : AppCompatActivity() {
 //        })
 
 
-        // GET dynamic path
+        // GET (dynamic path)
+
+//        button.setOnClickListener {
+//            val myNumber = number.text.toString()
+//            viewModel.getPostsDynamic(Integer.parseInt(myNumber))
+//
+//            viewModel.myResponseDynamic.observe(this@MainActivity, Observer {
+//                    response ->
+//
+//                if (response.isSuccessful) {
+//                    result.text = response.body().toString()
+//                } else {
+//                    Log.d("Response", response.errorBody().toString())
+//                    result.text = response.code().toString()
+//                }
+//
+//            })
+//        }
+
+
+        // GET (Query)
+
+//        button.setOnClickListener {
+//            val myNumber = number.text.toString()
+//            viewModel.getPostsCustom(Integer.parseInt(myNumber))
+//
+//            viewModel.myResponseCustom.observe(this@MainActivity, Observer {
+//                    response ->
+//
+//                if (response.isSuccessful) {
+//                    result.text = response.body().toString()
+//                    response.body()?.forEach {
+//                        Log.d("Response", it.userId.toString())
+//                        Log.d("Response", it.id.toString())
+//                        Log.d("Response", it.title)
+//                        Log.d("Response", it.body)
+//                        Log.d("Response", "------------------------")
+//                    }
+//                } else {
+//                    Log.d("Response", response.errorBody().toString())
+//                    result.text = response.code().toString()
+//                }
+//
+//            })
+//        }
+
+
+        // GET (multiple queries)
+
+        val options: HashMap<String, String> = HashMap()
+        options["_sort"] = "id"
+        options["_order"] = "desc"
 
         button.setOnClickListener {
             val myNumber = number.text.toString()
-            viewModel.getPostsDynamic(Integer.parseInt(myNumber))
+            viewModel.getCustomPostsMultipleQueries(Integer.parseInt(myNumber), options)
 
-            viewModel.myResponseDynamic.observe(this@MainActivity, Observer {
+            viewModel.myResponseCustomMultipleQueries.observe(this@MainActivity, Observer {
                     response ->
 
                 if (response.isSuccessful) {
                     result.text = response.body().toString()
+                    response.body()?.forEach {
+                        Log.d("Response", it.userId.toString())
+                        Log.d("Response", it.id.toString())
+                        Log.d("Response", it.title)
+                        Log.d("Response", it.body)
+                        Log.d("Response", "------------------------")
+                    }
                 } else {
                     Log.d("Response", response.errorBody().toString())
                     result.text = response.code().toString()

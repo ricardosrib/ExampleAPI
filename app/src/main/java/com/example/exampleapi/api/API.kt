@@ -7,6 +7,8 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface API {
 
@@ -14,11 +16,23 @@ interface API {
     @GET("posts/1")
     suspend fun getPosts(): Response<Posts>
 
-//    get posts api interface (path dynamic)
+    // get posts api interface (path dynamic)
     @GET("posts/{postNumber}")
     suspend fun getPostsDynamic(
         @Path("postNumber") number: Int
     ): Response<Posts>
+
+    // get posts api interface (query for some field value in the api)
+    @GET("posts")
+    suspend fun getPostsCustom(
+        @Query("userId") userId: Int
+    ): Response<List<Posts>>
+
+    @GET("posts")
+    suspend fun getCustomPostsMultipleQueries(
+        @Query("userId") userId: Int,
+        @QueryMap options: Map<String, String>
+    ): Response<List<Posts>>
 
     // post
     @FormUrlEncoded
