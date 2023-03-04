@@ -6,12 +6,19 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface API {
 
-    // get posts api interface
+    // get posts api interface (path hardcoded)
     @GET("posts/1")
     suspend fun getPosts(): Response<Posts>
+
+//    get posts api interface (path dynamic)
+    @GET("posts/{postNumber}")
+    suspend fun getPostsDynamic(
+        @Path("postNumber") number: Int
+    ): Response<Posts>
 
     // post
     @FormUrlEncoded

@@ -7,8 +7,13 @@ import retrofit2.Response
 class Repository {
 
     // repository class
+
     suspend fun getPosts(): Response<Posts> {
         return RetrofitInstance.api.getPosts()
+    }
+
+    suspend fun getPostsDynamic(number: Int): Response<Posts> {
+        return RetrofitInstance.api.getPostsDynamic(number)
     }
 
     // post field repository

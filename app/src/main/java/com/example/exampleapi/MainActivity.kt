@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val result = binding.result
+        val button = binding.button
+        val number = binding.editTextNumber
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -31,23 +33,43 @@ class MainActivity : AppCompatActivity() {
 
         // GET
 
-        viewModel.getPosts()
+//        viewModel.getPosts()
+//
+//        viewModel.myResponse.observe(this@MainActivity, Observer {
+//            response ->
+//
+//            if (response.isSuccessful) {
+//
+////                result.text = response.body()?.userId.toString()
+////                result.text = response.body()?.id.toString()
+//                result.text = response.body()?.title!!
+////                result.text = response.body()?.body!!
+//            } else {
+//                Log.d("Response", response.errorBody().toString())
+//                result.text = response.code().toString()
+//            }
+//
+//        })
 
-        viewModel.myResponse.observe(this@MainActivity, Observer {
-            response ->
 
-            if (response.isSuccessful) {
+        // GET dynamic path
 
-//                result.text = response.body()?.userId.toString()
-//                result.text = response.body()?.id.toString()
-                result.text = response.body()?.title!!
-//                result.text = response.body()?.body!!
-            } else {
-                Log.d("Response", response.errorBody().toString())
-                result.text = response.code().toString()
-            }
+        button.setOnClickListener {
+            val myNumber = number.text.toString()
+            viewModel.getPostsDynamic(Integer.parseInt(myNumber))
 
-        })
+            viewModel.myResponseDynamic.observe(this@MainActivity, Observer {
+                    response ->
+
+                if (response.isSuccessful) {
+                    result.text = response.body().toString()
+                } else {
+                    Log.d("Response", response.errorBody().toString())
+                    result.text = response.code().toString()
+                }
+
+            })
+        }
 
 
         // POST
@@ -84,6 +106,6 @@ Order of development:
 5 - repository
 6 - viewmodel
 7 - viewmodel factory
-8 - main activity build
+8 - main activity
 
 */
