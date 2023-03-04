@@ -24,13 +24,33 @@ class MainActivity : AppCompatActivity() {
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
-        viewModel.getPosts()
 
-        viewModel.myResponse.observe(this@MainActivity, Observer {
+        viewModel = ViewModelProvider(this@MainActivity, viewModelFactory)[MainViewModel::class.java]
+
+
+//        viewModel.getPosts()
+
+        viewModel.pushPosts(1, 1, "Ricardo API code", "Android developer")
+
+
+//        viewModel.myResponse.observe(this@MainActivity, Observer {
+//            response ->
+//
+//            result.text = response.title
+//        })
+
+        viewModel.myPushResponse.observe(this@MainActivity, Observer {
             response ->
 
-            result.text = response.title
+//            result.text = response.toString()
+
+            result.text = "Body: " + response.body()
+
+//            result.text = response.body()?.title.toString()
+
+//            result.text = "Message: " + response.message()
+
+//            result.text = "Code (if created = 201): " + response.code()
         })
     }
 }

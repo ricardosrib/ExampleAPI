@@ -6,15 +6,24 @@ import androidx.lifecycle.viewModelScope
 import com.example.exampleapi.model.Posts
 import com.example.exampleapi.repository.Repository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
     val myResponse: MutableLiveData<Posts> = MutableLiveData()
+    val myPushResponse: MutableLiveData<Response<Posts>> = MutableLiveData()
 
     fun getPosts() {
         viewModelScope.launch {
             val response = repository.getPosts()
             myResponse.value = response
+        }
+    }
+
+    fun pushPosts(userId: Int, id: Int, title: String, body: String) {
+        viewModelScope.launch {
+            val response = repository.pushPosts(userId, id, title, body)
+            myPushResponse.value = response
         }
     }
 }
