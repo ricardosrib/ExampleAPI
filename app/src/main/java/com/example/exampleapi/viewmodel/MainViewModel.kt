@@ -10,8 +10,11 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    val myResponse: MutableLiveData<Posts> = MutableLiveData()
+    val myResponse: MutableLiveData<Response<Posts>> = MutableLiveData()
     val myPushResponse: MutableLiveData<Response<Posts>> = MutableLiveData()
+
+    // call the API and then put the response within the MutableLiveData object
+    // later the MutableLiveData object will be observed from the MainActivity
 
     fun getPosts() {
         viewModelScope.launch {

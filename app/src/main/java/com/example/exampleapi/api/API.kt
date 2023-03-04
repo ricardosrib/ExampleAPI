@@ -11,7 +11,7 @@ interface API {
 
     // get posts api interface
     @GET("posts/1")
-    suspend fun getPosts(): Posts
+    suspend fun getPosts(): Response<Posts>
 
     // post
     @FormUrlEncoded
