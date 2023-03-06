@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.exampleapi.databinding.ActivityMainBinding
+import com.example.exampleapi.model.Posts
 import com.example.exampleapi.repository.Repository
 import com.example.exampleapi.viewmodel.MainViewModel
 import com.example.exampleapi.viewmodelfactory.MainViewModelFactory
@@ -101,40 +102,41 @@ class MainActivity : AppCompatActivity() {
 
         // GET (multiple queries)
 
-        val options: HashMap<String, String> = HashMap()
-        options["_sort"] = "id"
-        options["_order"] = "desc"
+//        val options: HashMap<String, String> = HashMap()
+//        options["_sort"] = "id"
+//        options["_order"] = "desc"
+//
+//        button.setOnClickListener {
+//            val myNumber = number.text.toString()
+//            viewModel.getCustomPostsMultipleQueries(Integer.parseInt(myNumber), options)
+//
+//            viewModel.myResponseCustomMultipleQueries.observe(this@MainActivity, Observer {
+//                    response ->
+//
+//                if (response.isSuccessful) {
+//                    result.text = response.body().toString()
+//                    response.body()?.forEach {
+//                        Log.d("Response", it.userId.toString())
+//                        Log.d("Response", it.id.toString())
+//                        Log.d("Response", it.title)
+//                        Log.d("Response", it.body)
+//                        Log.d("Response", "------------------------")
+//                    }
+//                } else {
+//                    Log.d("Response", response.errorBody().toString())
+//                    result.text = response.code().toString()
+//                }
+//
+//            })
+//        }
 
-        button.setOnClickListener {
-            val myNumber = number.text.toString()
-            viewModel.getCustomPostsMultipleQueries(Integer.parseInt(myNumber), options)
 
-            viewModel.myResponseCustomMultipleQueries.observe(this@MainActivity, Observer {
-                    response ->
+        // POST (JSON)
 
-                if (response.isSuccessful) {
-                    result.text = response.body().toString()
-                    response.body()?.forEach {
-                        Log.d("Response", it.userId.toString())
-                        Log.d("Response", it.id.toString())
-                        Log.d("Response", it.title)
-                        Log.d("Response", it.body)
-                        Log.d("Response", "------------------------")
-                    }
-                } else {
-                    Log.d("Response", response.errorBody().toString())
-                    result.text = response.code().toString()
-                }
-
-            })
-        }
-
-
-        // POST
-
-//        viewModel.pushPosts(1, 1, "Ricardo API code", "Android developer")
-
-//        viewModel.myPushResponse.observe(this@MainActivity, Observer {
+//        val post = Posts(1, 1, "Ricardo API code", "Android developer")
+//        viewModel.pushPosts1(post)
+//
+//        viewModel.myPushPost1response.observe(this@MainActivity, Observer {
 //            response ->
 //
 ////            result.text = response.toString()
@@ -147,6 +149,25 @@ class MainActivity : AppCompatActivity() {
 //
 ////            result.text = "Code (if created = 201): " + response.code()
 //        })
+
+
+        // POST (Url Encoded)
+
+        viewModel.pushPosts(1, 1, "Ricardo API code", "Android developer")
+
+        viewModel.myPushResponse.observe(this@MainActivity, Observer {
+            response ->
+
+//            result.text = response.toString()
+
+            result.text = "Body: " + response.body()
+
+//            result.text = response.body()?.title.toString()
+
+//            result.text = "Message: " + response.message()
+
+//            result.text = "Code (if created = 201): " + response.code()
+        })
 
 
     }

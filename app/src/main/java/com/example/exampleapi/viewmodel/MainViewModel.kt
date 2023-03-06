@@ -14,6 +14,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val myResponseDynamic: MutableLiveData<Response<Posts>> = MutableLiveData()
     val myResponseCustom: MutableLiveData<Response<List<Posts>>> = MutableLiveData()
     val myResponseCustomMultipleQueries: MutableLiveData<Response<List<Posts>>> = MutableLiveData()
+    val myPushPost1response: MutableLiveData<Response<Posts>> = MutableLiveData()
     val myPushResponse: MutableLiveData<Response<Posts>> = MutableLiveData()
 
     // call the API and then put the response within the MutableLiveData object
@@ -44,6 +45,13 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             val response = repository.getCustomPostsMultipleQueries(userId, options)
             myResponseCustomMultipleQueries.value = response
+        }
+    }
+
+    fun pushPosts1(post: Posts) {
+        viewModelScope.launch {
+            val response = repository.pushPosts1(post)
+            myPushPost1response.value = response
         }
     }
 
